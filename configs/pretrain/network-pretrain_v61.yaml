@@ -1,0 +1,38 @@
+model:
+  in_dim: 7
+  out_dim: 2
+  method: 39
+  F_depth: 1 # depth of graph convolution(FFT) ,best value: 1
+  W_depth: 1 # depth of graph convolution(Line) ,best value: 1
+  W_kerwidth: 64
+  F_kerwidth: 64
+  r_hz: 0.00005  # distance of frequency for adding edge to graph kernel
+  r_m: 0.14  # distance of frequency for adding edge to graph kernel
+  layers: [ 64, 64, 64, 64, 64 ] # when it used  with depth 2 is perfect
+  kernel_num_edge_features: 8
+  modes1: [ 25, 25, 25, 25 ]
+  modes2: [ 25, 25, 25, 25 ]
+  fc_dim: 128  #best value: 64
+  L_F_act: gelu
+  num_pad: 4
+  pad_ratio: [ 0,0.001,0 ]
+
+
+train:
+  batchsize: 4
+  Nsample: 500
+  epochs: [ 300,5000 ] #[600,5000]
+  scheduler_step: 50  #50
+  learning_rate: 0.004 #0.004
+  #  milestones: [ 1000,1500,2000,2500,3000,3500,4000,4500,6000,7000,8000 ]
+  milestones: [ 500,1000,1500,2000,2500,3000,3500,4000,4500,6000,7000,8000 ]
+  scheduler_gamma: 0.5
+  BC_loss: 0.3
+  IC_loss: 1
+  EQ_loss: 0.1
+
+  save_dir: '3Y_gas'
+  save_name: 'v20.pt'
+
+
+
