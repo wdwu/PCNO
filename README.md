@@ -1,5 +1,6 @@
-Please download the code data from the following website.
-https://doi.org/10.5281/zenodo.13996080
+Dataset：
+WU, WEIDONG (2025), “Physics-informed Partitioned Coupled Neural Operator for Complex Networks Datasets”, Mendeley Data, V1, doi: 10.17632/wx9kbx6kmn.1
+
 
 Code Explanation:
 (1) For model running and testing, please make the modifications in the net_v61_compare.yaml file located in the config folder.
