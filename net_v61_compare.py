@@ -276,46 +276,8 @@ class Graph_SpectralConv2d(nn.Module):
             return outputs
 
         # 方法分发
-        if method == 25:#FNO-A
-            fno_in, fno_in_h = preprocess(x)
-            fno_out = torch.einsum("bizxy,iozxy->bozxy", fno_in, self.weights1)
-            fno_out_h = torch.einsum("bizxy,iozxy->bozxy", fno_in_h, self.weights4)
-            return postprocess(x, fno_out, fno_out_h)
-
-        elif method == 27: #FNO
-            fno_in, fno_in_h = preprocess(x)
-            fno_out = torch.einsum("bizxy,ioxy->bozxy", fno_in, self.weights1)
-            fno_out_h = torch.einsum("bizxy,ioxy->bozxy", fno_in_h, self.weights4)
-            return postprocess(x, fno_out, fno_out_h)
-        # FNO-3D
-        elif method == 26:
-            x_stack = torch.stack(x, dim=-1)
-            x_ft = torch.fft.rfftn(x_stack, dim=[2, 3, 4])
-            z_dim = min(x_ft.shape[4], self.modes3)
-
-            out = torch.zeros(batchsize, self.out_channels,
-                              x_stack.size(2), x_stack.size(3), x_stack.size(4),
-                              device=x_stack.device, dtype=torch.cfloat)
-
-            quadrants = [
-                (slice(None), slice(None), slice(None, self.modes1), slice(None, self.modes2), self.weights1),
-                (slice(None), slice(None), slice(-self.modes1, None), slice(None, self.modes2), self.weights2),
-                (slice(None), slice(None), slice(None, self.modes1), slice(-self.modes2, None), self.weights3),
-                (slice(None), slice(None), slice(-self.modes1, None), slice(-self.modes2, None), self.weights4)
-            ]
-
-            for q in quadrants:
-                coeff = torch.zeros(batchsize, self.in_channels, self.modes1, self.modes2, self.modes3,
-                                    device=x_stack.device, dtype=torch.cfloat)
-                coeff[..., :z_dim] = x_ft[q[0], q[1], q[2], q[3], :z_dim]
-                out[q[0], q[1], q[2], q[3], :self.modes3] = torch.einsum("bixyz,ioxyz->boxyz", coeff, q[4])
-
-            return list(torch.unbind(
-                torch.fft.irfftn(out, s=(x_stack.size(2), x_stack.size(3), x_stack.size(4)), dim=[2, 3, 4]),
-                dim=-1))
-
         # PCNO-3D
-        elif method == 34:
+        if method == 34:
             x_stack = torch.stack(x, dim=-1)
             x_ft = torch.fft.rfftn(x_stack, dim=[2, 3, 4])
             z_dim = min(x_ft.shape[4], self.modes3)
