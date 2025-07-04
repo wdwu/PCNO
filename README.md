@@ -3,8 +3,7 @@ Physics-informed partitioned coupled neural operator for complex networks
 
 
 Dataset：
-WU, WEIDONG (2025), “Physics-informed Partitioned Coupled Neural Operator for Complex Networks Datasets”, Mendeley Data, V1, [doi: 10.17632/wx9kbx6kmn.1](https://doi.org/10.17632/wx9kbx
-6kmn.1)
+WU, WEIDONG (2025), “Physics-informed Partitioned Coupled Neural Operator for Complex Networks Datasets”, Mendeley Data, V1, [doi: 10.17632/wx9kbx6kmn.1](https://doi.org/10.17632/wx9kbx6kmn.1)
 
 
 Code Explanation:
